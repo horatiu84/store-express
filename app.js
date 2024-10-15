@@ -3,25 +3,42 @@ const app = express();
 
 const path = require("path");
 const rootDir = require("./helpers/path"); // return te root directory
+//const extressHbs = require("express-handlebars");
 
-const adminData = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
-app.set("view engine", "pug"); // tell express that we want to compile dinamic templates with pug engine
+
+const missingPageController = require('./controllers/404')
+
+// using engines for html
+
+// 1.handlebars
+
+/*app.engine(
+  "handlebars",
+  extressHbs({ layoutsDir: "views/layouts/", defaultLayout: "main-layout" })
+); // we need to use engine app for not build in engines like pug
+app.set("view engine", "handlebars"); // tell express that we want to compile dinamic templates with handlebars engine
+*/
+
+//2.pug
+//app.set("view engine", "pug"); // tell express that we want to compile dinamic templates with pug engine
+
+//3.ejs
+app.set("view engine", "ejs");
 app.set("views", "views"); // where to find those templates - folder views
 
 app.use(express.urlencoded({ extended: true }));
 //to handle URL-encoded data from form submissions.
 //When used, it automatically parses the incoming URL-encoded data and makes
 //it available in a more accessible format for developers to use.
-app.use(express.static(path.join(__dirname, "public"))); // serving a static firectory for static files
+app.use(express.static(path.join(rootDir, "public"))); // serving a static directory for static files
 
-app.use("/admin", adminData.routes);
+app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  //res.status(404).sendFile(path.join(rootDir, "views", "page-not-found.html"));
-  res.status(404).render("404", { pageTitle: "Page not found!" });
-});
+
+app.use(missingPageController.getMissingPage);
 
 app.listen(3000);
