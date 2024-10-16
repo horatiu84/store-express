@@ -7,7 +7,7 @@ const rootDir = require("./helpers/path"); // return te root directory
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-
+const cartRoutes = require('./routes/cart');
 
 const missingPageController = require('./controllers/404')
 
@@ -37,6 +37,7 @@ app.use(express.static(path.join(rootDir, "public"))); // serving a static direc
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
+app.use(cartRoutes);
 
 
 app.use(missingPageController.getMissingPage);
