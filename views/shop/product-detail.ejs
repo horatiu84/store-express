@@ -6,17 +6,15 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main class="center">
-                <% if (prods ) { %>
-                    <h1><%= prods.title %></h1>
+                <% if (product ) { %>
+                    <h1><%= product.title %></h1>
                     <hr>
                     <div>
-                        <img src="<%= prods.imageUrl %>" alt="<%= prods.title %>">
+                        <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
                     </div>
-                    <h2><%= prods.price %></h2>
-                    <p><%= prods.description %></p>
-                    <form action="/cart" method="post">
-                        <button type="submit" class="btn">Add to cart</button>
-                    </form>
+                    <h2><%= product.price %></h2>
+                    <p><%= product.description %></p>
+                    <%- include('../includes/add-to-cart.ejs') %>
                     <% } else { %>
                         <h1>No Products Found!</h1>
                         <% } %>
