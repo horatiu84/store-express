@@ -29,13 +29,17 @@ exports.getProduct = (req,res,next) => {
 exports.getIndex = (req, res, next) => {
   // console.log(adminData.products);
   // res.sendFile(path.join(rootDir, "views", "shop.html"));
-  Product.fetchAll((products) => {
-    res.render("shop/index", {
-      prods: products,
-      pageTitle: "Index",
-      path: "/",
-      hasProducts: products.length > 0,
-    }); // rendering the template
-  });
+  Product.fetchAll()
+    .then(([rows,dataFields]) => {
+      res.render("shop/index", {
+        prods: rows,
+        pageTitle: "Index",
+        path: "/"
+      }); // rendering the template
+    })
+    .catch(err => console.log(err))
+  
+   
+  
 };
 

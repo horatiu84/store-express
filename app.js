@@ -5,6 +5,20 @@ const path = require("path");
 const rootDir = require("./helpers/path"); // return te root directory
 //const extressHbs = require("express-handlebars");
 
+// DATABASE CONNECTION EXAMPLE :
+
+// const db = require('./utils/database');
+// db.execute('SELECT * FROM products')
+//   .then(
+//     (result) => {
+//       console.log(result);
+//     })
+  
+//   .catch(
+//     (err)=> {
+//       console.log(err);
+//     })
+
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const cartRoutes = require('./routes/cart');
