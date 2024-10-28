@@ -13,11 +13,13 @@ const rootDir = require("./helpers/path"); // return te root directory
 //     (result) => {
 //       console.log(result);
 //     })
-  
+
 //   .catch(
 //     (err)=> {
 //       console.log(err);
 //     })
+
+const sequelize = require('./utils/database')
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -56,4 +58,10 @@ app.use(cartRoutes);
 
 app.use(missingPageController.getMissingPage);
 
-app.listen(3000);
+
+sequelize.sync().then(
+  (res) => {
+    // console.log(res);
+    app.listen(3000);
+  }).catch(err => console.log(err));
+
