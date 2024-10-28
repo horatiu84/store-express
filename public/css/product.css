@@ -25,3 +25,7 @@
 .product__description {
     text-align: center;
 }
+
+img {
+    max-height: 480px;
+}

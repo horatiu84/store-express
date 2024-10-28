@@ -4,26 +4,29 @@ const Product = require("../models/product");
 exports.getProducts = (req, res, next) => {
   // console.log(adminData.products);
   // res.sendFile(path.join(rootDir, "views", "shop.html"));
-  Product.fetchAll((products) => {
+  Product.fetchAll()
+  .then(([rows]) => {
     res.render("shop/product-list", {
-      prods: products,
+      prods: rows,
       pageTitle: "Products",
       path: "/products",
-      hasProducts: products.length > 0,
+      hasProducts: rows.length > 0,
     }); // rendering the template
-  });
+  })
+  .catch(err => console.log(err))
 };
 
 exports.getProduct = (req,res,next) => {
   const prodId = req.params.productID;
-  Product.findById(prodId, product => {
-    
+  Product.findById(prodId).then(([product]) => {
     res.render('shop/product-detail',{
-      product: product,
+      product: product[0],
       pageTitle: "Product details",
       path: "/product-detail"
     });
-  } );
+  }).catch(err => console.log(err))     
+   
+  
 }
 
 exports.getIndex = (req, res, next) => {
@@ -38,8 +41,6 @@ exports.getIndex = (req, res, next) => {
       }); // rendering the template
     })
     .catch(err => console.log(err))
-  
-   
   
 };
 
